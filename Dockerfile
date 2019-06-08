@@ -21,13 +21,15 @@ RUN install -o docker -d ${APPDIR}
 
 WORKDIR ${APPDIR}
 
-RUN git clone https://github.com/amantur/safari-tensorflow-15MAY2017.git
+#RUN git clone https://github.com/amantur/safari-tensorflow-15MAY2017.git
 
 RUN pip3 install --user --upgrade pip
 
 RUN ["/bin/bash","-c","echo `pwd` && pip3 install --user --upgrade tensorflow"]
 
-RUN ["/bin/bash","-c","echo `pwd` && pip3 install --user --upgrade -r ~/safari-tensorflow-15MAY2017/requirements.txt"]
+COPY requirements.txt ~/requirements.txt
+
+RUN ["/bin/bash","-c","echo `pwd` && pip3 install --user --upgrade -r ~/requirements.txt"]
 
 ENV PATH=/home/docker/.local/bin:${PATH}
 
@@ -36,4 +38,4 @@ RUN python3 -c 'import tensorflow, numpy, jupyter, matplotlib'
 EXPOSE 8888
 
 # Entrypoint
-CMD ["/bin/bash", "-c", "cd ${APPDIR} && jupyter notebook --ip=*"]
+CMD ["/bin/bash", "-c", "cd ${APPDIR} && jupyter notebook --ip=0.0.0.0"]
