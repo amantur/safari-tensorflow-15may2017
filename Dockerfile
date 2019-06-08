@@ -23,11 +23,11 @@ WORKDIR ${APPDIR}
 
 #RUN git clone https://github.com/amantur/safari-tensorflow-15MAY2017.git
 
+COPY requirements.txt requirements.txt
+
 RUN pip3 install --user --upgrade pip
 
 RUN ["/bin/bash","-c","echo `pwd` && pip3 install --user --upgrade tensorflow"]
-
-COPY requirements.txt ~/requirements.txt
 
 RUN ["/bin/bash","-c","echo `pwd` && pip3 install --user --upgrade -r ~/requirements.txt"]
 
